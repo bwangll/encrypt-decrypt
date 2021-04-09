@@ -31,9 +31,9 @@ public class RSADemo {
 
         String input = "周吴郑王";
         //生成密钥保存到本地文件中
-        //generateKeyToFile(algorithm, "a.pub", "a.pri");
-        PrivateKey privateKey = getPrivateKey("a.pri", algorithm);
-        PublicKey publicKey = getPublicKey("a.pub", algorithm);
+        generateKeyToFile(algorithm, "public.pub", "private.pri");
+        PrivateKey privateKey = getPrivateKey("private.pri", algorithm);
+        PublicKey publicKey = getPublicKey("public.pub", algorithm);
         String encryptRSA = encryptRSA(algorithm, publicKey, input);
         String decryptRSA = decryptRSA(algorithm, privateKey, encryptRSA);
         System.out.println(encryptRSA);
@@ -109,6 +109,14 @@ public class RSADemo {
         FileUtils.writeStringToFile(new File(priPath), privateEncode, StandardCharsets.UTF_8);
     }
 
+    /**
+     * 使用密钥进行解密数据
+     * @param algorithm 算法
+     * @param key 密钥
+     * @param encrypted 加密的字符串
+     * @return 解密后的结果
+     * @throws Exception IO异常
+     */
     public static String decryptRSA(String algorithm, Key key, String encrypted) throws Exception {
         //创建加密对象
         Cipher cipher = Cipher.getInstance(algorithm);
